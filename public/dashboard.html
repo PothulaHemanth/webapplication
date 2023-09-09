@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Search</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  #container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <h1>Movie Search</h1>
+  <label for="movieInput">Enter a movie title:</label>
+  <input type="text" id="movieInput">
+  <button id="searchButton">Search</button>
+  <div id="movieInfo"></div>
+</div>
+<script>
+  const apiKey = 'fbcd88c0';
+  const searchButton = document.getElementById('searchButton');
+  const movieInput = document.getElementById('movieInput');
+  const movieInfo = document.getElementById('movieInfo');
+
+  searchButton.addEventListener('click', () => {
+    const movieTitle = movieInput.value;
+    if (movieTitle.trim() === '') {
+      alert('Please enter a movie title.');
+      return;
+    }
+    
+    const apiUrl = `http://www.omdbapi.com/?t=${encodeURIComponent(movieTitle)}&apikey=${apiKey}`;
+    
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        if (data.Response === 'True') {
+          movieInfo.innerHTML = `
+            <h2>${data.Title}</h2>
+            <p><strong>Year:</strong> ${data.Year}</p>
+            <p><strong>Genre:</strong> ${data.Genre}</p>
+            <p><strong>Director:</strong> ${data.Director}</p>
+            <p><strong>Plot:</strong> ${data.Plot}</p>
+            <img src="${data.Poster}" alt="${data.Title} Poster">
+          `;
+        } else {
+          movieInfo.innerHTML = '<p>Movie not found.</p>';
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        movieInfo.innerHTML = '<p>An error occurred while fetching data.</p>';
+      });
+  });
+</script>
+</body>
+</html>

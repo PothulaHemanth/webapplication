@@ -24,42 +24,47 @@ app.get('/login', function (req, res) {
 
 app.get("/dashboard", function (req, res) {
     res.sendFile(__dirname + "/public/" + "dashboard.html" );
-    res.send("Hello");
 });
 
 
 app.get('/signupsubmit', function (req, res) {
+  db.collection("Details")
+    .where("email","==",req.query.email)
+    .get()
+    .then  ((docs)=>{
+      if(docs.size>0){
+        res.send("Hey user this account is already exist")
+      }
+      else{
   db.collection("Details").add({
-    Name :req.query.name,
+    username :req.query.username,
     email: req.query.email,
     password: req.query.password 
   })
   .then(() =>{
     const successMessage="Signup Succesfull. click here to <a href='/login'>Log in</a>.";
     res.send(successMessage);
-  });
-});
+  });}
+});});
 
 app.get("/loginSubmit", function (req, res) {
     const username = req.query.username;
     const password = req.query.password;
 
     db.collection("Details")
-    .where("Fullname","==",username)
-    
+    .where("username","==",username)
     .where("password","==" ,password)
     .get()
     
     .then  ((docs)=>{
         if(docs.size>0){
-        res.send("<div class='center-message'>logged  in successfully.click here to view <a href='/dashboard'>dashboard</a>.</div>");
+          res.redirect("/dashboard");
         }
         else{
             res.send("login failed");
         }
       })
       .catch(error => {
-        // Proper error handling is missing. Provide meaningful error messages.
         console.error('Error fetching data:', error);
         res.send("An error occurred.");
     });

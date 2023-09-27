@@ -9,18 +9,64 @@
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-size: cover;
+    background-image: url('bag.jpg');
   }
   #container {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #f5f5f5 ;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5%;
+  }
+    h1 {
+    text-align: center; 
+    color: #333; 
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  input[type="text"] {
+    width: 95%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button {
+    background-color: #31e74c; 
+    color: #fff; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #0056b3; 
+  }
+  #movieInfo {
+    margin-top: 20px;
+  }
+  h2 {
+    color: #007BFF; 
+  }
+  p {
+    margin: 10px 0;
+    font-family: sans-serif;
+    font-size: larger;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
   }
 </style>
 </head>
-<body>
+<body >
 <div id="container">
   <h1>Movie Search</h1>
   <label for="movieInput">Enter a movie title:</label>
